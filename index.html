@@ -2,38 +2,51 @@
 layout: default
 title: Home
 ---
-<section class="hero">
-  <h1>Hi, I'm Cecil Franklin</h1>
-  <p>Welcome to my portfolio and blog.</p>
-</section>
-
-<section class="recent-projects">
-  <h2>Projects</h2>
-  <div class="project-grid">
-    {% for project in site.projects %}
-    <div class="project-card">
-      <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
-      <p>{{ project.description }}</p>
-      {% if project.tech %}
-      <div class="tech-stack">
-        {% for t in project.tech %}
-        <span class="tech-badge">{{ t }}</span>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </div>
-    {% endfor %}
+<div class="cover-page">
+  <div class="cover-border">
+    <div class="cover-org">Cecil O. Franklin &mdash; Technical Document Collection</div>
+    <h1>Portfolio &amp; Research Memoranda</h1>
+    <p class="cover-subtitle">Curriculum Vitae, Work Experience, and Technical Notes</p>
+    <p class="cover-author">Cecil O. Franklin</p>
+    <p class="cover-date">{{ 'now' | date: "%B %Y" | upcase }}</p>
+    <p class="cover-classification">DISTRIBUTION: UNLIMITED</p>
   </div>
-</section>
 
-<section class="recent-posts">
-  <h2>Recent Posts</h2>
-  <ul class="post-list">
-    {% for post in site.posts limit:5 %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <time>{{ post.date | date: "%B %d, %Y" }}</time>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+  <div class="cover-section">
+    <h2>Active Research Programs</h2>
+    <div class="program-card">
+      <span class="program-id">PROGRAM CF/SMM</span>
+      <h3>Space-Made Materials</h3>
+      <p>What materials can only be made in space and what do they enable?</p>
+    </div>
+    <div class="program-card">
+      <span class="program-id">PROGRAM CF/ISR</span>
+      <h3>Industrial Stack Reconstruction</h3>
+      <p>How do we rebuild the industrial stack on the Moon/Mars?</p>
+    </div>
+  </div>
+
+  <div class="cover-section">
+    <h2>Recent Memoranda</h2>
+    <table class="doc-index-table">
+      <thead>
+        <tr>
+          <th>Doc. No.</th>
+          <th>Date</th>
+          <th>Subject</th>
+          <th class="col-hide-mobile">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in site.posts limit:5 %}
+        <tr>
+          <td class="col-id">{{ site.doc_prefix }}/{{ post.doc_type | default: "TM" }}&mdash;{{ post.date | date: "%Y" }}&mdash;{{ post.doc_seq | default: "001" }}</td>
+          <td class="col-date">{{ post.date | date: "%Y-%m-%d" }}</td>
+          <td><a href="{{ post.url | relative_url }}">{{ post.title }}</a></td>
+          <td class="col-type">{{ post.doc_type | default: "TM" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<article class="memo-document experience-doc">
+  <div class="memo-header-block">
+    <div class="memo-header-row">
+      <div class="memo-id">
+        <span class="doc-label">REFERENCE</span>
+        <span class="doc-number">{{ site.doc_prefix }}/EXP&mdash;{{ page.doc_seq | default: "001" }}</span>
+      </div>
+      <div class="memo-date">
+        <span class="doc-label">PERIOD</span>
+        <span class="doc-value">{{ page.period }}</span>
+      </div>
+    </div>
+    <div class="memo-header-row">
+      <div class="memo-subject">
+        <span class="doc-label">POSITION</span>
+        <span class="doc-value memo-title">{{ page.title }}</span>
+      </div>
+    </div>
+    <div class="memo-header-row">
+      <div class="memo-from">
+        <span class="doc-label">ORGANIZATION</span>
+        <span class="doc-value">{{ page.organization }}</span>
+      </div>
+    </div>
+    {% if page.tech %}
+    <div class="memo-header-row">
+      <div class="memo-keywords">
+        <span class="doc-label">TECHNOLOGIES</span>
+        <span class="doc-value">{{ page.tech | join: "; " | upcase }}</span>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="memo-body">
+    {{ content }}
+  </div>
+</article>

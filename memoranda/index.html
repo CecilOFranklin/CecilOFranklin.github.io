@@ -1,0 +1,28 @@
+---
+layout: default
+title: Memoranda Index
+---
+<h1 class="index-title">Index of Technical Memoranda</h1>
+
+<table class="doc-index-table">
+  <thead>
+    <tr>
+      <th>Doc. No.</th>
+      <th>Date</th>
+      <th>Subject</th>
+      <th class="col-hide-mobile">Type</th>
+      <th class="col-hide-mobile">Program</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for post in site.posts %}
+    <tr>
+      <td class="col-id">{{ site.doc_prefix }}/{{ post.doc_type | default: "TM" }}&mdash;{{ post.date | date: "%Y" }}&mdash;{{ post.doc_seq | default: "001" }}</td>
+      <td class="col-date">{{ post.date | date: "%Y-%m-%d" }}</td>
+      <td><a href="{{ post.url | relative_url }}">{{ post.title }}</a></td>
+      <td class="col-type">{{ post.doc_type | default: "TM" }}</td>
+      <td class="col-type col-hide-mobile">{{ post.program | default: "&mdash;" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,26 @@
+---
+layout: default
+title: Experience
+---
+<h1 class="index-title">Work Experience Record</h1>
+
+<table class="doc-index-table">
+  <thead>
+    <tr>
+      <th>Ref.</th>
+      <th>Period</th>
+      <th>Position</th>
+      <th class="col-hide-mobile">Organization</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for exp in site.experiences %}
+    <tr>
+      <td class="col-id">{{ site.doc_prefix }}/EXP&mdash;{{ exp.doc_seq | default: "001" }}</td>
+      <td class="col-date">{{ exp.period }}</td>
+      <td><a href="{{ exp.url | relative_url }}">{{ exp.title }}</a></td>
+      <td class="col-type col-hide-mobile">{{ exp.organization }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

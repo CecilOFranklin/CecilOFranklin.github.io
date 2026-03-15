@@ -1,4 +1,9 @@
-/* ===== Base Reset ===== */
+/* ==========================================================
+   CF TECHNICAL DOCUMENT SYSTEM
+   Theme: 1960s–1980s NASA Technical Report / Photocopy
+   ========================================================== */
+
+/* --- Reset & Root --- */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -6,276 +11,655 @@
 }
 
 :root {
-  --bg: #fafafa;
-  --text: #1a1a1a;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --card-bg: #ffffff;
-  --max-width: 800px;
+  --paper: #f0ebe0;
+  --paper-dark: #e8e2d4;
+  --ink: #1c1c1c;
+  --ink-light: #3a3a38;
+  --ink-faded: #6b6860;
+  --rule: #b8b0a0;
+  --rule-light: #d4cec2;
+  --accent: #2a4a7f;
+  --red-stamp: #8b2020;
+  --max-width: 760px;
+  --font-body: 'Special Elite', 'Courier New', Courier, monospace;
+  --font-mono: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
+/* --- SVG Filters (hidden) --- */
+.svg-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* --- Technical Drawing Background --- */
+.drawing-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.drawing-bg .drawing-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Speckle / Photocopy Noise --- */
+.speckle-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  filter: url(#noise);
+  background: transparent;
+  opacity: 1;
+}
+
+/* Additional dot-speckling via radial gradients */
+.speckle-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(0,0,0,0.12) 0.5px, transparent 0.5px),
+    radial-gradient(circle, rgba(0,0,0,0.08) 0.7px, transparent 0.7px),
+    radial-gradient(circle, rgba(0,0,0,0.06) 0.4px, transparent 0.4px);
+  background-size:
+    47px 53px,
+    97px 71px,
+    33px 89px;
+  background-position:
+    0 0,
+    23px 37px,
+    11px 67px;
+}
+
+/* --- Vignette --- */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 120px 40px rgba(0, 0, 0, 0.10),
+    inset 0 0 300px 80px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Body / Page --- */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.75;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
+/* --- Document Surface --- */
+.document-surface {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-a:hover {
-  color: var(--accent-hover);
+/* --- Navigation (top strip) --- */
+.doc-nav {
+  border-bottom: 2px solid var(--ink);
+  padding: 0.6rem 2rem;
+  background: rgba(240, 235, 224, 0.85);
+  backdrop-filter: blur(2px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-/* ===== Header / Nav ===== */
-.site-header {
-  border-bottom: 1px solid var(--border);
-  padding: 1rem 2rem;
-}
-
-.nav-container {
+.nav-inner {
   max-width: var(--max-width);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.site-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-links a {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.nav-links a:hover {
-  color: var(--text);
-}
-
-/* ===== Main Content ===== */
-.content {
-  max-width: var(--max-width);
-  margin: 2rem auto;
-  padding: 0 2rem;
-}
-
-/* ===== Hero ===== */
-.hero {
-  padding: 3rem 0;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  color: var(--muted);
-}
-
-/* ===== Sections ===== */
-section {
-  margin-bottom: 3rem;
-}
-
-section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.5rem;
-}
-
-/* ===== Project Grid ===== */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.project-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.5rem;
-  transition: box-shadow 0.2s;
-}
-
-.project-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.project-card h3 {
-  margin-bottom: 0.5rem;
-}
-
-.project-card p {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-/* ===== Tech Badges ===== */
-.tech-stack {
-  display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.75rem;
 }
 
-.tech-badge {
-  background: var(--border);
-  color: var(--muted);
+.nav-org {
+  font-family: var(--font-mono);
   font-size: 0.8rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* ===== Post List ===== */
-.post-list {
-  list-style: none;
+.doc-nav nav {
+  display: flex;
+  gap: 1.5rem;
 }
 
-.post-list li {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--border);
+.doc-nav nav a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-faded);
+  transition: color 0.15s;
 }
 
-.post-list li:last-child {
+.doc-nav nav a:hover {
+  color: var(--ink);
+}
+
+/* --- Page Body --- */
+.page-body {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  flex: 1;
+  width: 100%;
+}
+
+/* =============================================
+   MEMO / DOCUMENT HEADER BLOCK
+   ============================================= */
+.memo-header-block {
+  border: 2px solid var(--ink);
+  margin-bottom: 2rem;
+}
+
+.memo-header-row {
+  display: flex;
+  border-bottom: 1px solid var(--rule);
+}
+
+.memo-header-row:last-child {
   border-bottom: none;
 }
 
-.post-list a {
-  font-size: 1.1rem;
-  font-weight: 600;
+.memo-header-row > div {
+  padding: 0.4rem 0.75rem;
+  flex: 1;
 }
 
-.post-list time {
+.memo-header-row > div + div {
+  border-left: 1px solid var(--rule);
+}
+
+.doc-label {
   display: block;
-  color: var(--muted);
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-bottom: 0.1rem;
 }
 
-.post-list p {
-  color: var(--muted);
+.doc-value {
+  display: block;
   font-size: 0.95rem;
+}
+
+.doc-number {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.memo-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* --- Abstract --- */
+.memo-abstract {
+  border: 1px solid var(--rule);
+  padding: 0.75rem 1rem;
+  margin-bottom: 2rem;
+  background: rgba(0,0,0,0.015);
+}
+
+.memo-abstract p {
+  font-size: 0.9rem;
+  color: var(--ink-light);
   margin-top: 0.25rem;
 }
 
-/* ===== Post Page ===== */
-.post-header {
-  margin-bottom: 2rem;
+/* --- Memo Body --- */
+.memo-body {
+  line-height: 1.85;
 }
 
-.post-header h1 {
-  font-size: 2rem;
+.memo-body h2 {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.25rem;
+}
+
+.memo-body h3 {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 1.75rem;
   margin-bottom: 0.5rem;
 }
 
-.post-header time {
-  color: var(--muted);
-}
-
-.post-tags {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.tag {
-  background: var(--border);
-  color: var(--muted);
-  font-size: 0.8rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-}
-
-.post-content {
-  line-height: 1.8;
-}
-
-.post-content h2, .post-content h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.post-content p {
+.memo-body p {
   margin-bottom: 1rem;
+  text-align: justify;
+  hyphens: auto;
 }
 
-.post-content code {
-  background: var(--border);
-  padding: 0.15rem 0.4rem;
-  border-radius: 3px;
-  font-size: 0.9em;
+.memo-body ul, .memo-body ol {
+  margin: 0.5rem 0 1rem 1.5rem;
 }
 
-.post-content pre {
+.memo-body li {
+  margin-bottom: 0.35rem;
+}
+
+.memo-body blockquote {
+  border-left: 3px solid var(--rule);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.memo-body code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: rgba(0,0,0,0.04);
+  padding: 0.15rem 0.35rem;
+  border: 1px solid var(--rule-light);
+}
+
+.memo-body pre {
   background: #1e1e1e;
   color: #d4d4d4;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
   padding: 1rem;
-  border-radius: 6px;
   overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--ink);
+}
+
+.memo-body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+.memo-body img {
+  max-width: 100%;
+  border: 1px solid var(--rule);
+  margin: 1rem 0;
+}
+
+.memo-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+.memo-body th, .memo-body td {
+  border: 1px solid var(--rule);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+}
+
+.memo-body th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.03);
+}
+
+/* --- End mark --- */
+.memo-end-mark {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-faded);
+}
+
+/* =============================================
+   RESUME / CV
+   ============================================= */
+.resume-title-block {
+  text-align: center;
+  border: 2px solid var(--ink);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.resume-doc-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--ink-faded);
   margin-bottom: 1rem;
 }
 
-.post-content pre code {
-  background: none;
-  padding: 0;
+.resume-title-block h1 {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.25rem;
 }
 
-/* ===== Project Page ===== */
-.project-header {
+.resume-title-block h2 {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.resume-meta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--ink-faded);
+}
+
+/* =============================================
+   INDEX / LISTING PAGES
+   ============================================= */
+.index-title {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.5rem;
   margin-bottom: 2rem;
 }
 
-.project-header h1 {
-  margin-bottom: 0.75rem;
+.doc-index-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.project-link {
-  display: inline-block;
-  margin-top: 0.75rem;
-  font-weight: 600;
+.doc-index-table th {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: left;
+  border-bottom: 2px solid var(--ink);
+  padding: 0.4rem 0.5rem;
+  color: var(--ink-faded);
 }
 
-/* ===== Footer ===== */
-.site-footer {
-  border-top: 1px solid var(--border);
+.doc-index-table td {
+  font-size: 0.9rem;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--rule-light);
+  vertical-align: top;
+}
+
+.doc-index-table tr:hover td {
+  background: rgba(0,0,0,0.02);
+}
+
+.doc-index-table a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.doc-index-table a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.doc-index-table .col-id {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+.doc-index-table .col-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  color: var(--ink-faded);
+}
+
+.doc-index-table .col-type {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-faded);
+}
+
+/* =============================================
+   COVER PAGE (Home)
+   ============================================= */
+.cover-page {
   text-align: center;
-  padding: 2rem;
-  color: var(--muted);
-  font-size: 0.85rem;
-  margin-top: 4rem;
+  padding: 2rem 0;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 600px) {
-  .nav-container {
+.cover-border {
+  border: 3px solid var(--ink);
+  padding: 3rem 2rem;
+  margin-bottom: 3rem;
+}
+
+.cover-border .cover-org {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+  margin-bottom: 2rem;
+}
+
+.cover-border h1 {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.cover-border .cover-subtitle {
+  font-size: 1.1rem;
+  color: var(--ink-light);
+  margin-bottom: 2rem;
+}
+
+.cover-border .cover-author {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.cover-border .cover-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faded);
+}
+
+.cover-classification {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-faded);
+  margin-top: 1.5rem;
+}
+
+/* --- Cover sections --- */
+.cover-section {
+  text-align: left;
+  margin-top: 2.5rem;
+}
+
+.cover-section h2 {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.program-card {
+  border: 1px solid var(--rule);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.program-card .program-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--ink-faded);
+}
+
+.program-card h3 {
+  font-size: 1rem;
+  margin: 0.25rem 0;
+}
+
+.program-card p {
+  font-size: 0.9rem;
+  color: var(--ink-light);
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.doc-footer {
+  border-top: 2px solid var(--ink);
+  padding: 0.75rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faded);
+  text-transform: uppercase;
+  margin-top: auto;
+}
+
+/* =============================================
+   LINKS (general)
+   ============================================= */
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.memo-body a {
+  border-bottom: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.memo-body a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+
+  .nav-inner {
     flex-direction: column;
-    gap: 0.75rem;
+    text-align: center;
   }
 
-  .hero h1 {
-    font-size: 1.8rem;
+  .doc-nav nav {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .project-grid {
-    grid-template-columns: 1fr;
+  .page-body {
+    padding: 1.5rem 1rem;
+  }
+
+  .memo-header-row {
+    flex-direction: column;
+  }
+
+  .memo-header-row > div + div {
+    border-left: none;
+    border-top: 1px solid var(--rule-light);
+  }
+
+  .cover-border {
+    padding: 1.5rem 1rem;
+  }
+
+  .doc-footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.25rem;
+  }
+
+  .doc-index-table .col-type,
+  .doc-index-table .col-hide-mobile {
+    display: none;
+  }
+
+  .resume-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* =============================================
+   PRINT STYLES
+   ============================================= */
+@media print {
+  .drawing-bg,
+  .speckle-overlay,
+  .vignette,
+  .doc-nav {
+    display: none !important;
+  }
+
+  .document-surface {
+    z-index: 0;
+  }
+
+  body {
+    background: white;
   }
 }

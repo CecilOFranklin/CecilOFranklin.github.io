@@ -1,38 +1,45 @@
-title: Cecil Franklin
-description: Portfolio & Blog
+title: Cecil O. Franklin
+description: Technical Memoranda & Portfolio
 url: "https://ceciloFranklin.github.io"
 baseurl: ""
 
-# Build settings
 markdown: kramdown
-permalink: /blog/:year/:month/:day/:title/
+permalink: /memoranda/:slug/
 
-# Plugins
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# Collections
 collections:
-  projects:
+  experiences:
     output: true
-    permalink: /projects/:title/
+    permalink: /experience/:title/
 
-# Defaults
+# Document numbering prefix
+doc_prefix: "CF"
+
+# Research programs
+programs:
+  SMM:
+    name: "Space-Made Materials"
+    question: "What materials can only be made in space and what do they enable?"
+  ISR:
+    name: "Industrial Stack Reconstruction"
+    question: "How do we rebuild the industrial stack on the Moon/Mars?"
+
 defaults:
   - scope:
       path: ""
       type: "posts"
     values:
-      layout: "post"
+      layout: "memo"
   - scope:
       path: ""
-      type: "projects"
+      type: "experiences"
     values:
-      layout: "project"
+      layout: "experience"
 
-# Exclude from build
 exclude:
   - Gemfile
   - Gemfile.lock

@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<article class="memo-document resume-doc">
+  <div class="resume-title-block">
+    <div class="resume-doc-id">{{ site.doc_prefix }}/CV&mdash;{{ 'now' | date: "%Y" }}&mdash;REV.A</div>
+    <h1>CURRICULUM VITAE</h1>
+    <h2>Cecil O. Franklin</h2>
+    <div class="resume-meta">
+      <span>REVISED: {{ 'now' | date: "%B %Y" | upcase }}</span>
+      <span>DISTRIBUTION: UNLIMITED</span>
+    </div>
+  </div>
+
+  <div class="memo-body">
+    {{ content }}
+  </div>
+</article>

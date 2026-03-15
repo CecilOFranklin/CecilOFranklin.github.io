@@ -4,29 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% seo %}
   {% feed_meta %}
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav-container">
-      <a href="{{ '/' | relative_url }}" class="site-title">{{ site.title }}</a>
-      <ul class="nav-links">
-        <li><a href="{{ '/' | relative_url }}">Home</a></li>
-        <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
-        <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
-        <li><a href="{{ '/about/' | relative_url }}">About</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- Technical drawing background layer -->
+  <div class="drawing-bg" aria-hidden="true">
+    {% include drawing-bg.svg %}
+  </div>
 
-  <main class="content">
-    {{ content }}
-  </main>
+  <!-- Speckle noise overlay -->
+  <div class="speckle-overlay" aria-hidden="true"></div>
 
-  <footer class="site-footer">
-    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
-  </footer>
+  <!-- Page vignette -->
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Document surface -->
+  <div class="document-surface">
+    <header class="doc-nav">
+      <div class="nav-inner">
+        <span class="nav-org">{{ site.doc_prefix | default: "CF" }} &mdash; {{ site.title }}</span>
+        <nav>
+          <a href="{{ '/' | relative_url }}">COVER</a>
+          <a href="{{ '/resume/' | relative_url }}">RESUME</a>
+          <a href="{{ '/experience/' | relative_url }}">EXPERIENCE</a>
+          <a href="{{ '/memoranda/' | relative_url }}">MEMORANDA</a>
+          <a href="{{ '/about/' | relative_url }}">ABOUT</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-body">
+      {{ content }}
+    </main>
+
+    <footer class="doc-footer">
+      <span>&copy; {{ 'now' | date: "%Y" }} Cecil O. Franklin</span>
+      <span>DISTRIBUTION: UNLIMITED</span>
+    </footer>
+  </div>
+
+  <!-- SVG filters for noise -->
+  <svg class="svg-filters" aria-hidden="true">
+    <defs>
+      <filter id="noise">
+        <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch" result="noise"/>
+        <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+        <feComponentTransfer in="grayNoise" result="speckle">
+          <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0.03 0.06"/>
+        </feComponentTransfer>
+      </filter>
+      <filter id="roughen">
+        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="turbulence"/>
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
 </body>
 </html>

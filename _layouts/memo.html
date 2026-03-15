@@ -1,0 +1,74 @@
+---
+layout: default
+---
+<article class="memo-document">
+  <div class="memo-header-block">
+    <div class="memo-header-row">
+      <div class="memo-id">
+        <span class="doc-label">DOCUMENT NO.</span>
+        <span class="doc-number">{{ site.doc_prefix }}/{{ page.doc_type | default: "TM" }}&mdash;{{ page.date | date: "%Y" }}&mdash;{{ page.doc_seq | default: "001" }}</span>
+      </div>
+      <div class="memo-date">
+        <span class="doc-label">DATE</span>
+        <span class="doc-value">{{ page.date | date: "%B %d, %Y" }}</span>
+      </div>
+    </div>
+    <div class="memo-header-row">
+      <div class="memo-subject">
+        <span class="doc-label">SUBJECT</span>
+        <span class="doc-value memo-title">{{ page.title }}</span>
+      </div>
+    </div>
+    {% if page.program %}
+    <div class="memo-header-row">
+      <div class="memo-program">
+        <span class="doc-label">PROGRAM</span>
+        <span class="doc-value">{{ page.program }}</span>
+      </div>
+    </div>
+    {% endif %}
+    <div class="memo-header-row">
+      <div class="memo-from">
+        <span class="doc-label">FROM</span>
+        <span class="doc-value">Cecil O. Franklin</span>
+      </div>
+      {% if page.doc_type %}
+      <div class="memo-type">
+        <span class="doc-label">TYPE</span>
+        <span class="doc-value">
+          {% case page.doc_type %}
+            {% when "TM" %}Technical Memorandum
+            {% when "TN" %}Technical Note
+            {% when "CR" %}Computational Report
+            {% when "TP" %}Technical Paper
+            {% else %}Technical Memorandum
+          {% endcase %}
+        </span>
+      </div>
+      {% endif %}
+    </div>
+    {% if page.tags and page.tags.size > 0 %}
+    <div class="memo-header-row">
+      <div class="memo-keywords">
+        <span class="doc-label">KEYWORDS</span>
+        <span class="doc-value">{{ page.tags | join: "; " | upcase }}</span>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if page.abstract %}
+  <div class="memo-abstract">
+    <span class="doc-label">ABSTRACT</span>
+    <p>{{ page.abstract }}</p>
+  </div>
+  {% endif %}
+
+  <div class="memo-body">
+    {{ content }}
+  </div>
+
+  <div class="memo-end-mark">
+    &mdash; END OF DOCUMENT &mdash;
+  </div>
+</article>
