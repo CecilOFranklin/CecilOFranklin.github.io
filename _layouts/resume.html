@@ -1,18 +1,34 @@
 ---
 layout: default
 ---
-<article class="memo-document resume-doc">
-  <div class="resume-title-block">
-    <div class="resume-doc-id">{{ site.doc_prefix }}/CV&mdash;{{ 'now' | date: "%Y" }}&mdash;REV.A</div>
-    <h1>CURRICULUM VITAE</h1>
-    <h2>Cecil O. Franklin</h2>
-    <div class="resume-meta">
-      <span>REVISED: {{ 'now' | date: "%B %Y" | upcase }}</span>
-      <span>DISTRIBUTION: UNLIMITED</span>
+<article class="memo">
+
+  <div class="memo-heading">CECIL O. FRANKLIN &mdash; CURRICULUM VITAE</div>
+  <div class="memo-rule-heavy"></div>
+
+  <div class="memo-fields">
+    <div class="memo-field">
+      <span class="memo-label">DOCUMENT NO.</span>
+      <span class="memo-value mono">{{ site.doc_prefix }}/CV&mdash;{{ 'now' | date: "%Y" }}&mdash;REV.A</span>
+    </div>
+    <div class="memo-field">
+      <span class="memo-label">REVISED</span>
+      <span class="memo-value">{{ 'now' | date: "%B %Y" }}</span>
+    </div>
+    <div class="memo-field">
+      <span class="memo-label">SUBJECT</span>
+      <span class="memo-value subject">Curriculum Vitae &mdash; Cecil O. Franklin</span>
+    </div>
+    <div class="memo-field">
+      <span class="memo-label">DISTRIBUTION</span>
+      <span class="memo-value">Unlimited</span>
     </div>
   </div>
+
+  <div class="memo-rule-heavy"></div>
 
   <div class="memo-body">
     {{ content }}
   </div>
+
 </article>

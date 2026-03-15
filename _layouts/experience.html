@@ -1,41 +1,40 @@
 ---
 layout: default
 ---
-<article class="memo-document experience-doc">
-  <div class="memo-header-block">
-    <div class="memo-header-row">
-      <div class="memo-id">
-        <span class="doc-label">REFERENCE</span>
-        <span class="doc-number">{{ site.doc_prefix }}/EXP&mdash;{{ page.doc_seq | default: "001" }}</span>
-      </div>
-      <div class="memo-date">
-        <span class="doc-label">PERIOD</span>
-        <span class="doc-value">{{ page.period }}</span>
-      </div>
+<article class="memo">
+
+  <div class="memo-heading">CECIL O. FRANKLIN &mdash; EXPERIENCE RECORD</div>
+  <div class="memo-rule-heavy"></div>
+
+  <div class="memo-fields">
+    <div class="memo-field">
+      <span class="memo-label">REFERENCE</span>
+      <span class="memo-value mono">{{ site.doc_prefix }}/EXP&mdash;{{ page.doc_seq | default: "001" }}</span>
     </div>
-    <div class="memo-header-row">
-      <div class="memo-subject">
-        <span class="doc-label">POSITION</span>
-        <span class="doc-value memo-title">{{ page.title }}</span>
-      </div>
+    <div class="memo-field">
+      <span class="memo-label">PERIOD</span>
+      <span class="memo-value">{{ page.period }}</span>
     </div>
-    <div class="memo-header-row">
-      <div class="memo-from">
-        <span class="doc-label">ORGANIZATION</span>
-        <span class="doc-value">{{ page.organization }}</span>
-      </div>
+    <div class="memo-field">
+      <span class="memo-label">ORGANIZATION</span>
+      <span class="memo-value">{{ page.organization }}</span>
+    </div>
+    <div class="memo-field">
+      <span class="memo-label">POSITION</span>
+      <span class="memo-value subject">{{ page.title }}</span>
     </div>
     {% if page.tech %}
-    <div class="memo-header-row">
-      <div class="memo-keywords">
-        <span class="doc-label">TECHNOLOGIES</span>
-        <span class="doc-value">{{ page.tech | join: "; " | upcase }}</span>
-      </div>
+    <div class="memo-field">
+      <span class="memo-label">TECHNOLOGIES</span>
+      <span class="memo-value">{{ page.tech | join: "; " }}</span>
     </div>
     {% endif %}
   </div>
 
+  <div class="memo-rule-heavy"></div>
+
   <div class="memo-body">
     {{ content }}
   </div>
+
 </article>

@@ -1,9 +1,8 @@
 /* ==========================================================
    CF TECHNICAL DOCUMENT SYSTEM
-   Theme: 1960s–1980s NASA Technical Report / Photocopy
+   NASA TM / Photocopy Aesthetic — 1960s–1980s
    ========================================================== */
 
-/* --- Reset & Root --- */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -11,21 +10,18 @@
 }
 
 :root {
-  --paper: #f0ebe0;
-  --paper-dark: #e8e2d4;
+  --paper: #eae8e3;
   --ink: #1c1c1c;
-  --ink-light: #3a3a38;
-  --ink-faded: #6b6860;
-  --rule: #b8b0a0;
-  --rule-light: #d4cec2;
+  --ink-light: #333330;
+  --ink-faded: #77756e;
+  --rule: #aaa89f;
+  --rule-light: #ccc9c0;
   --accent: #2a4a7f;
-  --red-stamp: #8b2020;
-  --max-width: 760px;
+  --sidebar-w: 200px;
   --font-body: 'Special Elite', 'Courier New', Courier, monospace;
   --font-mono: 'Courier Prime', 'Courier New', Courier, monospace;
 }
 
-/* --- SVG Filters (hidden) --- */
 .svg-filters {
   position: absolute;
   width: 0;
@@ -33,13 +29,15 @@
   overflow: hidden;
 }
 
-/* --- Technical Drawing Background --- */
+/* ==========================================================
+   BACKGROUND LAYERS
+   ========================================================== */
+
 .drawing-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
 }
 
 .drawing-bg .drawing-svg {
@@ -47,217 +45,351 @@
   height: 100%;
 }
 
-/* --- Speckle / Photocopy Noise --- */
+/* --- Photocopy stipple --- */
 .speckle-overlay {
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
   filter: url(#noise);
-  background: transparent;
-  opacity: 1;
 }
 
-/* Additional dot-speckling via radial gradients */
 .speckle-overlay::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle, rgba(0,0,0,0.12) 0.5px, transparent 0.5px),
-    radial-gradient(circle, rgba(0,0,0,0.08) 0.7px, transparent 0.7px),
-    radial-gradient(circle, rgba(0,0,0,0.06) 0.4px, transparent 0.4px);
+    radial-gradient(circle, #000 0.6px, transparent 0.6px),
+    radial-gradient(circle, #000 0.4px, transparent 0.4px),
+    radial-gradient(circle, #000 0.5px, transparent 0.5px),
+    radial-gradient(circle, #000 0.3px, transparent 0.3px),
+    radial-gradient(circle, #000 0.7px, transparent 0.7px),
+    radial-gradient(circle, #000 0.35px, transparent 0.35px);
   background-size:
-    47px 53px,
-    97px 71px,
-    33px 89px;
+    41px 43px,
+    67px 59px,
+    97px 83px,
+    29px 73px,
+    113px 107px,
+    53px 37px;
   background-position:
-    0 0,
-    23px 37px,
-    11px 67px;
+    3px 7px,
+    31px 19px,
+    13px 47px,
+    71px 11px,
+    7px 61px,
+    43px 29px;
+  opacity: 0.12;
 }
 
-/* --- Vignette --- */
+/* Second speckle layer for density variation */
+.speckle-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, #000 0.5px, transparent 0.5px),
+    radial-gradient(circle, #000 0.3px, transparent 0.3px),
+    radial-gradient(circle, #000 0.4px, transparent 0.4px);
+  background-size:
+    79px 61px,
+    47px 91px,
+    131px 53px;
+  background-position:
+    17px 23px,
+    59px 41px,
+    83px 7px;
+  opacity: 0.08;
+}
+
 .vignette {
   position: fixed;
   inset: 0;
   z-index: 2;
   pointer-events: none;
   box-shadow:
-    inset 0 0 120px 40px rgba(0, 0, 0, 0.10),
-    inset 0 0 300px 80px rgba(0, 0, 0, 0.05);
+    inset 0 0 80px 30px rgba(0,0,0,0.07),
+    inset 0 0 200px 60px rgba(0,0,0,0.04);
 }
 
-/* --- Body / Page --- */
+/* ==========================================================
+   BODY / PAGE
+   ========================================================== */
+
 body {
   font-family: var(--font-body);
   background: var(--paper);
   color: var(--ink);
-  line-height: 1.75;
-  font-size: 15px;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
+  font-size: 14.5px;
   min-height: 100vh;
 }
 
-/* --- Document Surface --- */
-.document-surface {
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* ==========================================================
+   SIDEBAR + MAIN LAYOUT
+   ========================================================== */
+
+.page-layout {
   position: relative;
   z-index: 3;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  border-right: 1.5px solid var(--ink);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background: rgba(234,232,227,0.92);
+  backdrop-filter: blur(2px);
+  z-index: 10;
+}
+
+.sidebar-inner {
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.sidebar-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  display: block;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  color: var(--ink-faded);
+  display: block;
+  line-height: 1.5;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-nav-label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-faded);
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule-light);
+  padding-bottom: 0.2rem;
+}
+
+.sidebar-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0;
+  color: var(--ink-faded);
+  border-bottom: 1px dotted var(--rule-light);
+  transition: color 0.1s;
+}
+
+.sidebar-nav a:last-child {
+  border-bottom: none;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+  color: var(--ink);
+}
+
+.sidebar-nav a.active {
+  font-weight: 700;
+}
+
+.sidebar-programs {
+  margin-bottom: auto;
+}
+
+.sidebar-program {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-light);
+  display: block;
+  margin-top: 0.4rem;
+}
+
+.sidebar-program-name {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  color: var(--ink-faded);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-footer {
+  margin-top: 2rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  color: var(--ink-faded);
+  line-height: 1.8;
+}
+
+.sidebar-footer span {
+  display: block;
+}
+
+/* --- Main content area --- */
+.main-content {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 2rem 3rem;
+  max-width: 1100px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* --- Navigation (top strip) --- */
-.doc-nav {
-  border-bottom: 2px solid var(--ink);
-  padding: 0.6rem 2rem;
-  background: rgba(240, 235, 224, 0.85);
-  backdrop-filter: blur(2px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+/* ==========================================================
+   MEMO FORMAT — Ruled lines, not boxes
+   ========================================================== */
 
-.nav-inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.nav-org {
+.memo-heading {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.doc-nav nav {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.doc-nav nav a {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-align: center;
   color: var(--ink-faded);
-  transition: color 0.15s;
+  margin-bottom: 0.5rem;
 }
 
-.doc-nav nav a:hover {
-  color: var(--ink);
+.memo-rule-heavy {
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 1rem;
 }
 
-/* --- Page Body --- */
-.page-body {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 2.5rem 2rem;
-  flex: 1;
-  width: 100%;
-}
-
-/* =============================================
-   MEMO / DOCUMENT HEADER BLOCK
-   ============================================= */
-.memo-header-block {
-  border: 2px solid var(--ink);
-  margin-bottom: 2rem;
-}
-
-.memo-header-row {
-  display: flex;
+.memo-rule-light {
   border-bottom: 1px solid var(--rule);
+  margin: 1.5rem 0;
 }
 
-.memo-header-row:last-child {
+/* Memo fields — label/value pairs on single lines */
+.memo-fields {
+  margin-bottom: 0.5rem;
+}
+
+.memo-field {
+  display: flex;
+  align-items: baseline;
+  padding: 0.2rem 0;
+  border-bottom: 1px dotted var(--rule-light);
+  line-height: 1.6;
+}
+
+.memo-field:last-child {
   border-bottom: none;
 }
 
-.memo-header-row > div {
-  padding: 0.4rem 0.75rem;
-  flex: 1;
+.memo-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faded);
+  width: 120px;
+  flex-shrink: 0;
 }
 
-.memo-header-row > div + div {
-  border-left: 1px solid var(--rule);
+.memo-value {
+  font-size: 0.9rem;
 }
 
-.doc-label {
-  display: block;
+.memo-value.mono {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.memo-value.subject {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Abstract (inline, not boxed) */
+.memo-abstract {
+  font-size: 0.88rem;
+  color: var(--ink-light);
+  line-height: 1.7;
+  margin: 0.5rem 0;
+  text-align: justify;
+}
+
+.memo-abstract-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faded);
+}
+
+.memo-end {
+  text-align: center;
   font-family: var(--font-mono);
   font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  letter-spacing: 0.25em;
   color: var(--ink-faded);
-  margin-bottom: 0.1rem;
+  margin-top: 0.5rem;
 }
 
-.doc-value {
-  display: block;
-  font-size: 0.95rem;
-}
+/* ==========================================================
+   MEMO BODY — Typewritten document style
+   ========================================================== */
 
-.doc-number {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.memo-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-/* --- Abstract --- */
-.memo-abstract {
-  border: 1px solid var(--rule);
-  padding: 0.75rem 1rem;
-  margin-bottom: 2rem;
-  background: rgba(0,0,0,0.015);
-}
-
-.memo-abstract p {
-  font-size: 0.9rem;
-  color: var(--ink-light);
-  margin-top: 0.25rem;
-}
-
-/* --- Memo Body --- */
 .memo-body {
   line-height: 1.85;
+  margin-top: 0.5rem;
 }
 
 .memo-body h2 {
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
 }
 
 .memo-body h3 {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 1.75rem;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.06em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .memo-body p {
@@ -271,11 +403,11 @@ body {
 }
 
 .memo-body li {
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.3rem;
 }
 
 .memo-body blockquote {
-  border-left: 3px solid var(--rule);
+  border-left: 2px solid var(--rule);
   padding-left: 1rem;
   margin: 1rem 0;
   color: var(--ink-faded);
@@ -285,121 +417,86 @@ body {
 .memo-body code {
   font-family: var(--font-mono);
   font-size: 0.85em;
-  background: rgba(0,0,0,0.04);
-  padding: 0.15rem 0.35rem;
-  border: 1px solid var(--rule-light);
+  background: rgba(0,0,0,0.035);
+  padding: 0.1rem 0.3rem;
 }
 
 .memo-body pre {
-  background: #1e1e1e;
-  color: #d4d4d4;
+  background: #1a1a1a;
+  color: #ccc;
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   padding: 1rem;
   overflow-x: auto;
   margin: 1rem 0;
-  border: 1px solid var(--ink);
+  border-left: 3px solid var(--ink);
 }
 
 .memo-body pre code {
   background: none;
-  border: none;
   padding: 0;
   color: inherit;
 }
 
 .memo-body img {
   max-width: 100%;
-  border: 1px solid var(--rule);
   margin: 1rem 0;
 }
 
 .memo-body table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin: 1rem 0;
-}
-
-.memo-body th, .memo-body td {
-  border: 1px solid var(--rule);
-  padding: 0.4rem 0.6rem;
-  text-align: left;
 }
 
 .memo-body th {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: rgba(0,0,0,0.03);
-}
-
-/* --- End mark --- */
-.memo-end-mark {
-  text-align: center;
-  margin-top: 3rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--rule);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  text-align: left;
+  border-bottom: 1.5px solid var(--ink);
+  padding: 0.3rem 0.4rem;
   color: var(--ink-faded);
 }
 
-/* =============================================
-   RESUME / CV
-   ============================================= */
-.resume-title-block {
-  text-align: center;
-  border: 2px solid var(--ink);
-  padding: 2rem 1.5rem;
-  margin-bottom: 2.5rem;
+.memo-body td {
+  border-bottom: 1px dotted var(--rule-light);
+  padding: 0.35rem 0.4rem;
 }
 
-.resume-doc-id {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  color: var(--ink-faded);
-  margin-bottom: 1rem;
+.memo-body hr {
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  margin: 1.5rem 0;
 }
 
-.resume-title-block h1 {
-  font-family: var(--font-mono);
-  font-size: 1.6rem;
-  letter-spacing: 0.15em;
-  margin-bottom: 0.25rem;
+.memo-body a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
 }
 
-.resume-title-block h2 {
-  font-family: var(--font-body);
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin-bottom: 1rem;
+.memo-body a:hover {
+  border-bottom-color: var(--ink);
 }
 
-.resume-meta {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  color: var(--ink-faded);
-}
+/* ==========================================================
+   INDEX / LISTING — Document tables
+   ========================================================== */
 
-/* =============================================
-   INDEX / LISTING PAGES
-   ============================================= */
 .index-title {
   font-family: var(--font-mono);
-  font-size: 1.3rem;
-  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.index-rule {
   border-bottom: 2px solid var(--ink);
-  padding-bottom: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .doc-index-table {
@@ -409,228 +506,196 @@ body {
 
 .doc-index-table th {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   text-align: left;
-  border-bottom: 2px solid var(--ink);
-  padding: 0.4rem 0.5rem;
+  border-bottom: 1.5px solid var(--ink);
+  padding: 0.3rem 0.4rem;
   color: var(--ink-faded);
 }
 
 .doc-index-table td {
-  font-size: 0.9rem;
-  padding: 0.6rem 0.5rem;
-  border-bottom: 1px solid var(--rule-light);
+  font-size: 0.85rem;
+  padding: 0.45rem 0.4rem;
+  border-bottom: 1px dotted var(--rule-light);
   vertical-align: top;
-}
-
-.doc-index-table tr:hover td {
-  background: rgba(0,0,0,0.02);
 }
 
 .doc-index-table a {
   color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule-light);
 }
 
 .doc-index-table a:hover {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  border-bottom-color: var(--ink);
 }
 
 .doc-index-table .col-id {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   white-space: nowrap;
   letter-spacing: 0.03em;
 }
 
 .doc-index-table .col-date {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   white-space: nowrap;
   color: var(--ink-faded);
 }
 
 .doc-index-table .col-type {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   letter-spacing: 0.05em;
   color: var(--ink-faded);
 }
 
-/* =============================================
-   COVER PAGE (Home)
-   ============================================= */
-.cover-page {
+/* ==========================================================
+   COVER PAGE
+   ========================================================== */
+
+.cover {
   text-align: center;
-  padding: 2rem 0;
 }
 
-.cover-border {
-  border: 3px solid var(--ink);
-  padding: 3rem 2rem;
-  margin-bottom: 3rem;
-}
-
-.cover-border .cover-org {
+.cover-header {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   letter-spacing: 0.25em;
-  text-transform: uppercase;
   color: var(--ink-faded);
-  margin-bottom: 2rem;
+  margin-bottom: 0.75rem;
 }
 
-.cover-border h1 {
+.cover-rule {
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 2.5rem;
+}
+
+.cover h1 {
   font-family: var(--font-mono);
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
-.cover-border .cover-subtitle {
-  font-size: 1.1rem;
+.cover-subtitle {
+  font-size: 0.95rem;
   color: var(--ink-light);
   margin-bottom: 2rem;
 }
 
-.cover-border .cover-author {
-  font-size: 1rem;
+.cover-author {
+  font-size: 0.95rem;
   margin-bottom: 0.5rem;
 }
 
-.cover-border .cover-date {
+.cover-date {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
   color: var(--ink-faded);
 }
 
-.cover-classification {
+.cover-dist {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   letter-spacing: 0.2em;
   color: var(--ink-faded);
   margin-top: 1.5rem;
 }
 
-/* --- Cover sections --- */
 .cover-section {
   text-align: left;
-  margin-top: 2.5rem;
+  margin-top: 3rem;
 }
 
-.cover-section h2 {
+.cover-section-title {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 0.3rem;
-  margin-bottom: 1rem;
-}
-
-.program-card {
-  border: 1px solid var(--rule);
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.program-card .program-id {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   letter-spacing: 0.15em;
+  text-transform: uppercase;
   color: var(--ink-faded);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.2rem;
+  margin-bottom: 1rem;
 }
 
-.program-card h3 {
-  font-size: 1rem;
-  margin: 0.25rem 0;
+.program-entry {
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
 }
 
-.program-card p {
-  font-size: 0.9rem;
-  color: var(--ink-light);
-}
-
-/* =============================================
-   FOOTER
-   ============================================= */
-.doc-footer {
-  border-top: 2px solid var(--ink);
-  padding: 0.75rem 2rem;
-  display: flex;
-  justify-content: space-between;
+.program-entry .program-id {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   color: var(--ink-faded);
-  text-transform: uppercase;
+}
+
+.program-entry h3 {
+  font-size: 0.9rem;
+  margin: 0.1rem 0;
+}
+
+.program-entry p {
+  font-size: 0.85rem;
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+/* ==========================================================
+   PAGE FOOTER
+   ========================================================== */
+
+.page-footer {
   margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faded);
+  text-transform: uppercase;
 }
 
-/* =============================================
-   LINKS (general)
-   ============================================= */
-a {
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.memo-body a {
-  border-bottom: 1px solid var(--accent);
-  color: var(--accent);
-}
-
-.memo-body a:hover {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
-}
-
-/* =============================================
+/* ==========================================================
    RESPONSIVE
-   ============================================= */
-@media (max-width: 640px) {
-  body {
-    font-size: 14px;
+   ========================================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-w: 0px;
   }
 
-  .nav-inner {
-    flex-direction: column;
-    text-align: center;
+  .sidebar {
+    position: fixed;
+    left: -220px;
+    width: 220px;
+    transition: left 0.2s;
+    z-index: 100;
   }
 
-  .doc-nav nav {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+  .sidebar.open {
+    left: 0;
   }
 
-  .page-body {
+  .main-content {
+    margin-left: 0;
     padding: 1.5rem 1rem;
   }
 
-  .memo-header-row {
+  .memo-field {
     flex-direction: column;
   }
 
-  .memo-header-row > div + div {
-    border-left: none;
-    border-top: 1px solid var(--rule-light);
-  }
-
-  .cover-border {
-    padding: 1.5rem 1rem;
-  }
-
-  .doc-footer {
-    flex-direction: column;
-    text-align: center;
-    gap: 0.25rem;
+  .memo-label {
+    width: auto;
+    margin-bottom: 0;
   }
 
   .doc-index-table .col-type,
@@ -638,25 +703,27 @@ a {
     display: none;
   }
 
-  .resume-meta {
+  .page-footer {
     flex-direction: column;
-    gap: 0.5rem;
+    text-align: center;
+    gap: 0.2rem;
   }
 }
 
-/* =============================================
-   PRINT STYLES
-   ============================================= */
+/* ==========================================================
+   PRINT
+   ========================================================== */
+
 @media print {
   .drawing-bg,
   .speckle-overlay,
   .vignette,
-  .doc-nav {
+  .sidebar {
     display: none !important;
   }
 
-  .document-surface {
-    z-index: 0;
+  .main-content {
+    margin-left: 0;
   }
 
   body {

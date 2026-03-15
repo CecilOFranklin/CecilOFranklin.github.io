@@ -12,57 +12,70 @@
   {% feed_meta %}
 </head>
 <body>
-  <!-- Technical drawing background layer -->
+  <!-- Technical drawing background -->
   <div class="drawing-bg" aria-hidden="true">
     {% include drawing-bg.svg %}
   </div>
 
-  <!-- Speckle noise overlay -->
+  <!-- Speckle / photocopy noise -->
   <div class="speckle-overlay" aria-hidden="true"></div>
 
-  <!-- Page vignette -->
+  <!-- Vignette -->
   <div class="vignette" aria-hidden="true"></div>
 
-  <!-- Document surface -->
-  <div class="document-surface">
-    <header class="doc-nav">
-      <div class="nav-inner">
-        <span class="nav-org">{{ site.doc_prefix | default: "CF" }} &mdash; {{ site.title }}</span>
-        <nav>
-          <a href="{{ '/' | relative_url }}">COVER</a>
-          <a href="{{ '/resume/' | relative_url }}">RESUME</a>
-          <a href="{{ '/experience/' | relative_url }}">EXPERIENCE</a>
-          <a href="{{ '/memoranda/' | relative_url }}">MEMORANDA</a>
-          <a href="{{ '/about/' | relative_url }}">ABOUT</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="page-body">
-      {{ content }}
-    </main>
-
-    <footer class="doc-footer">
-      <span>&copy; {{ 'now' | date: "%Y" }} Cecil O. Franklin</span>
-      <span>DISTRIBUTION: UNLIMITED</span>
-    </footer>
-  </div>
-
-  <!-- SVG filters for noise -->
+  <!-- SVG filters -->
   <svg class="svg-filters" aria-hidden="true">
     <defs>
-      <filter id="noise">
-        <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
         <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
         <feComponentTransfer in="grayNoise" result="speckle">
-          <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0.03 0.06"/>
+          <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0.04 0.08 0.12"/>
         </feComponentTransfer>
-      </filter>
-      <filter id="roughen">
-        <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="turbulence"/>
-        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
       </filter>
     </defs>
   </svg>
+
+  <div class="page-layout">
+    <!-- Sidebar navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-header">
+          <a href="{{ '/' | relative_url }}" class="sidebar-title">{{ site.doc_prefix }}</a>
+          <span class="sidebar-subtitle">CECIL O. FRANKLIN</span>
+          <span class="sidebar-subtitle">TECHNICAL DOCUMENTS</span>
+        </div>
+        <nav class="sidebar-nav">
+          <span class="sidebar-nav-label">CONTENTS</span>
+          <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>COVER SHEET</a>
+          <a href="{{ '/resume/' | relative_url }}" {% if page.url contains '/resume' %}class="active"{% endif %}>RESUME / CV</a>
+          <a href="{{ '/experience/' | relative_url }}" {% if page.url contains '/experience' %}class="active"{% endif %}>EXPERIENCE LOG</a>
+          <a href="{{ '/memoranda/' | relative_url }}" {% if page.url contains '/memoranda' %}class="active"{% endif %}>MEMORANDA INDEX</a>
+          <a href="{{ '/about/' | relative_url }}" {% if page.url contains '/about' %}class="active"{% endif %}>ABOUT / GUIDE</a>
+        </nav>
+        <div class="sidebar-programs">
+          <span class="sidebar-nav-label">PROGRAMS</span>
+          <span class="sidebar-program">CF/SMM</span>
+          <span class="sidebar-program-name">Space-Made Materials</span>
+          <span class="sidebar-program">CF/ISR</span>
+          <span class="sidebar-program-name">Industrial Stack Recon.</span>
+        </div>
+        <div class="sidebar-footer">
+          <span>DIST: UNLIMITED</span>
+          <span>&copy; {{ 'now' | date: "%Y" }}</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main document area -->
+    <main class="main-content">
+      {{ content }}
+
+      <div class="page-footer">
+        <span>{{ site.doc_prefix }} &mdash; Cecil O. Franklin</span>
+        <span>UNCLASSIFIED / UNLIMITED DISTRIBUTION</span>
+      </div>
+    </main>
+  </div>
 </body>
 </html>
