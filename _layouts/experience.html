@@ -2,31 +2,13 @@
 layout: default
 ---
 <article class="memo">
-  <div class="memo-heading">CECIL O. FRANKLIN &mdash; EXPERIENCE RECORD</div>
-  <div class="memo-rule-heavy"></div>
+  <h1 class="memo-title">{{ page.title }}</h1>
+  <div class="memo-meta">{{ page.organization }}{% if page.period %} &middot; {{ page.period }}{% endif %}</div>
+  <div class="memo-rule"></div>
 
-  <table class="doc-table">
-    <tr>
-      <td><strong>REFERENCE</strong></td>
-      <td>{{ site.doc_prefix }}/EXP&mdash;{{ page.doc_seq | default: "001" }}</td>
-      <td><strong>PERIOD</strong></td>
-      <td>{{ page.period }}</td>
-    </tr>
-    <tr>
-      <td><strong>ORGANIZATION</strong></td>
-      <td colspan="3">{{ page.organization }}</td>
-    </tr>
-    <tr>
-      <td><strong>POSITION</strong></td>
-      <td colspan="3"><strong>{{ page.title }}</strong></td>
-    </tr>
-    {% if page.tech %}
-    <tr>
-      <td><strong>TECHNOLOGIES</strong></td>
-      <td colspan="3">{{ page.tech | join: "; " }}</td>
-    </tr>
-    {% endif %}
-  </table>
+  {% if page.tech %}
+  <div class="memo-tags">{{ page.tech | join: " &middot; " }}</div>
+  {% endif %}
 
   <div class="memo-body">
     {{ content }}

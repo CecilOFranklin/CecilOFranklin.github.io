@@ -281,79 +281,43 @@ strong, b { font-weight: 400; }
 .page-inner { flex: 1; }
 
 /* ==========================================================
-   TITLE BLOCK — compact, bottom-right
-   ========================================================== */
-
-.title-block-wrap {
-  margin-top: auto;
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 1rem;
-}
-
-.title-block {
-  border-collapse: collapse;
-  font-size: 13px;
-  width: 400px;
-}
-
-.title-block td {
-  border: 0.5px solid var(--border);
-  padding: 3px 6px;
-  color: var(--ink);
-  font-size: 13px;
-  vertical-align: top;
-}
-
-.title-block .tb-label {
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  display: block;
-}
-
-.title-block .tb-val {
-  font-size: 13px;
-  display: block;
-}
-
-.title-block .tb-val-title {
-  font-size: 14px;
-  font-weight: 400;
-  display: block;
-}
-
-/* ==========================================================
    MEMO FORMAT
    ========================================================== */
 
-.memo-heading {
-  font-size: 13px; letter-spacing: 0.15em;
-  text-align: center; color: var(--ink);
-  margin-bottom: 4px;
+.memo-title {
+  font-size: clamp(18px, calc(16px + 0.5vw), 24px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.memo-meta {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+
+.memo-tags {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  opacity: 0.6;
+  margin-bottom: 0.8rem;
 }
 
 .memo-rule { border-bottom: 0.5px solid var(--border); margin: 8px 0; }
-.memo-rule-heavy { border-bottom: 1px solid var(--border); margin: 8px 0; }
 
 .memo-abstract {
   font-size: 15px; color: var(--ink);
   margin: 6px 0; text-align: justify;
 }
 
-.memo-abstract-label {
-  font-size: 13px; letter-spacing: 0.08em; font-weight: 400;
-}
-
-.memo-end {
-  text-align: center; font-size: 13px;
-  letter-spacing: 0.2em; color: var(--ink); margin-top: 4px;
-}
-
 /* ==========================================================
    ALL TABLES — thin borders, uniform color
    ========================================================== */
 
-table.doc-table,
 table.doc-index-table,
 .memo-body table {
   width: 100%;
@@ -363,7 +327,6 @@ table.doc-index-table,
   border: 0.5px solid var(--border);
 }
 
-table.doc-table th, table.doc-table td,
 table.doc-index-table th, table.doc-index-table td,
 .memo-body th, .memo-body td {
   border: 0.5px solid var(--border);
@@ -374,7 +337,6 @@ table.doc-index-table th, table.doc-index-table td,
   color: var(--ink);
 }
 
-table.doc-table th,
 table.doc-index-table th,
 .memo-body th {
   font-weight: 400;
@@ -557,7 +519,6 @@ table.doc-index-table a { color: var(--ink); }
   .sidebar.open { left: 0; }
   .main-content { margin-left: 0; padding: 0.5rem; }
   .sheet-content { padding: 1rem; }
-  .title-block { width: 100%; }
   .zone-bar-left, .zone-bar-right { display: none; }
 }
 
@@ -566,5 +527,4 @@ table.doc-index-table a { color: var(--ink); }
   .main-content { margin-left: 0; }
   body { background: white; color: #000; }
   .drawing-sheet { border-color: #000; }
-  .title-block td { border-color: #000; }
 }

@@ -78,27 +78,6 @@
             <div class="page-inner">
               {{ content }}
             </div>
-            <div class="title-block-wrap">
-              <table class="title-block">
-                <tr>
-                  <td rowspan="2" style="width:180px">
-                    <span class="tb-label">TITLE</span>
-                    <span class="tb-val-title">{{ page.title | default: site.title }}</span>
-                  </td>
-                  <td><span class="tb-label">DWG NO.</span><span class="tb-val">CF-{{ 'now' | date: "%Y" }}</span></td>
-                  <td><span class="tb-label">REV</span><span class="tb-val">A</span></td>
-                </tr>
-                <tr>
-                  <td><span class="tb-label">SCALE</span><span class="tb-val">N/A</span></td>
-                  <td><span class="tb-label">SHEET</span><span class="tb-val">1 OF 1</span></td>
-                </tr>
-                <tr>
-                  <td><span class="tb-label">DRAWN</span><span class="tb-val">C.O.F. {{ 'now' | date: "%m/%Y" }}</span></td>
-                  <td><span class="tb-label">CHK</span><span class="tb-val">&mdash;</span></td>
-                  <td><span class="tb-label">APR</span><span class="tb-val">&mdash;</span></td>
-                </tr>
-              </table>
-            </div>
           </div>
           <div class="zone-bar-right">
             <div class="zone-cell-v">1</div>

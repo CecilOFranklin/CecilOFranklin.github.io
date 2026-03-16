@@ -2,49 +2,16 @@
 layout: default
 ---
 <article class="memo">
-  <div class="memo-heading">CECIL O. FRANKLIN &mdash; TECHNICAL DOCUMENT SYSTEM</div>
-  <div class="memo-rule-heavy"></div>
-
-  <table class="doc-table">
-    <tr>
-      <td><strong>DOCUMENT NO.</strong></td>
-      <td>[{{ page.date | date: "%m" }}-{{ page.date | date: "%Y" }}-{{ page.doc_seq | default: "001" }}]</td>
-      <td><strong>DATE</strong></td>
-      <td>{{ page.date | date: "%B %d, %Y" }}</td>
-    </tr>
-    <tr>
-      <td><strong>FROM</strong></td>
-      <td>Cecil O. Franklin</td>
-      <td><strong>TYPE</strong></td>
-      <td>{% case page.doc_type %}{% when "TM" %}Technical Memorandum{% when "TN" %}Technical Note{% when "CR" %}Computational Report{% when "TP" %}Technical Paper{% else %}Technical Memorandum{% endcase %}</td>
-    </tr>
-    {% if page.program %}
-    <tr>
-      <td><strong>PROGRAM</strong></td>
-      <td colspan="3">{{ page.program }}</td>
-    </tr>
-    {% endif %}
-    <tr>
-      <td><strong>SUBJECT</strong></td>
-      <td colspan="3"><strong>{{ page.title }}</strong></td>
-    </tr>
-    {% if page.tags and page.tags.size > 0 %}
-    <tr>
-      <td><strong>KEYWORDS</strong></td>
-      <td colspan="3">{{ page.tags | join: "; " }}</td>
-    </tr>
-    {% endif %}
-  </table>
+  <h1 class="memo-title">{{ page.title }}</h1>
+  <div class="memo-meta">{{ page.date | date: "%B %d, %Y" }}{% if page.doc_type %} &middot; {{ page.doc_type }}{% endif %}</div>
+  <div class="memo-rule"></div>
 
   {% if page.abstract %}
-  <p class="memo-abstract"><span class="memo-abstract-label">ABSTRACT &mdash;</span> {{ page.abstract }}</p>
+  <p class="memo-abstract">{{ page.abstract }}</p>
   <div class="memo-rule"></div>
   {% endif %}
 
   <div class="memo-body">
     {{ content }}
   </div>
-
-  <div class="memo-rule"></div>
-  <div class="memo-end">&mdash; END OF DOCUMENT &mdash;</div>
 </article>
