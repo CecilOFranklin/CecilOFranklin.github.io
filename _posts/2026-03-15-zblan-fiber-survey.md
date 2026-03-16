@@ -1,12 +1,12 @@
 ---
 layout: memo
-title: "Preliminary Survey of ZBLAN Fiber Production in Microgravity"
+title: "Economics of ZBLAN Fiber Production in Microgravity"
 date: 2026-03-15
 doc_type: TN
 doc_seq: "002"
 program: CF/SMM
 tags: [zblan, fiber-optics, microgravity, materials]
-abstract: "A brief survey of ZBLAN fluoride glass fiber research conducted in microgravity environments, summarizing key findings from ISS experiments and identifying open questions for further investigation."
+abstract: "A survey of ZBLAN fluoride glass fiber research conducted in microgravity environments, summarizing key findings from ISS experiments and identifying open questions."
 ---
 
 ## 1. Background
@@ -25,4 +25,4 @@ In microgravity, the suppression of buoyancy-driven convection allows for more u
 
 ## 4. Next Steps
 
-A more detailed literature review and cost model are planned as a follow-up Computational Report (CF/CR—2026—XXX).
+A more detailed literature review and cost model are planned as a follow-up Computational Report.

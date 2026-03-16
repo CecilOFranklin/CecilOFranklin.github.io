@@ -3,50 +3,42 @@ layout: default
 title: Home
 ---
 <div class="cover">
-  <div class="cover-header">CECIL O. FRANKLIN &mdash; TECHNICAL DOCUMENT COLLECTION</div>
-  <div class="cover-rule"></div>
-
-  <h1>Portfolio &amp; Research Memoranda</h1>
-  <p class="cover-subtitle">Curriculum Vitae, Work Experience Record, and Technical Notes</p>
-  <p class="cover-author">Cecil O. Franklin</p>
-  <p class="cover-date">{{ 'now' | date: "%B %Y" | upcase }}</p>
-  <p class="cover-dist">DISTRIBUTION: UNLIMITED</p>
-</div>
-
-<div class="cover-section">
-  <div class="cover-section-title">Active Research Programs</div>
-  <div class="program-entry">
-    <span class="program-id">PROGRAM CF/SMM</span>
-    <h3>Space-Made Materials</h3>
-    <p>What materials can only be made in space and what do they enable?</p>
-  </div>
-  <div class="program-entry">
-    <span class="program-id">PROGRAM CF/ISR</span>
-    <h3>Industrial Stack Reconstruction</h3>
-    <p>How do we rebuild the industrial stack on the Moon/Mars?</p>
+  <div class="cover-hero">
+    <div class="cover-hero-text">
+      <table class="cover-title-block">
+        <tr>
+          <td class="ctb-title">Workshopping</td>
+        </tr>
+        <tr>
+          <td class="ctb-author">Archive made by Cecil O. Franklin</td>
+        </tr>
+      </table>
+      <p class="cover-blurb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <img src="{{ '/assets/images/lunar-module-transparent.png' | relative_url }}" alt="NASA Lunar Module technical diagram" class="cover-diagram">
   </div>
 </div>
 
-<div class="cover-section">
-  <div class="cover-section-title">Recent Memoranda</div>
+{% if site.posts.size > 0 %}
+<div class="recent-docs">
+  <div class="recent-heading">RECENT DOCUMENTS</div>
   <table class="doc-index-table">
     <thead>
       <tr>
-        <th>Doc. No.</th>
-        <th>Date</th>
-        <th>Subject</th>
-        <th class="col-hide-mobile">Type</th>
+        <th>Serial</th>
+        <th>Title</th>
+        <th>Type</th>
       </tr>
     </thead>
     <tbody>
       {% for post in site.posts limit:5 %}
       <tr>
-        <td class="col-id">{{ site.doc_prefix }}/{{ post.doc_type | default: "TM" }}&mdash;{{ post.date | date: "%Y" }}&mdash;{{ post.doc_seq | default: "001" }}</td>
-        <td class="col-date">{{ post.date | date: "%Y-%m-%d" }}</td>
+        <td>[{{ post.date | date: "%m" }}-{{ post.date | date: "%Y" }}-{{ post.doc_seq | default: "001" }}]</td>
         <td><a href="{{ post.url | relative_url }}">{{ post.title }}</a></td>
-        <td class="col-type">{{ post.doc_type | default: "TM" }}</td>
+        <td>{{ post.doc_type | default: "TM" }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+{% endif %}

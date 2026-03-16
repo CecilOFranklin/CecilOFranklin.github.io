@@ -2,33 +2,27 @@
 layout: default
 ---
 <article class="memo">
-
   <div class="memo-heading">CECIL O. FRANKLIN &mdash; CURRICULUM VITAE</div>
   <div class="memo-rule-heavy"></div>
 
-  <div class="memo-fields">
-    <div class="memo-field">
-      <span class="memo-label">DOCUMENT NO.</span>
-      <span class="memo-value mono">{{ site.doc_prefix }}/CV&mdash;{{ 'now' | date: "%Y" }}&mdash;REV.A</span>
-    </div>
-    <div class="memo-field">
-      <span class="memo-label">REVISED</span>
-      <span class="memo-value">{{ 'now' | date: "%B %Y" }}</span>
-    </div>
-    <div class="memo-field">
-      <span class="memo-label">SUBJECT</span>
-      <span class="memo-value subject">Curriculum Vitae &mdash; Cecil O. Franklin</span>
-    </div>
-    <div class="memo-field">
-      <span class="memo-label">DISTRIBUTION</span>
-      <span class="memo-value">Unlimited</span>
-    </div>
-  </div>
-
-  <div class="memo-rule-heavy"></div>
+  <table class="doc-table">
+    <tr>
+      <td><strong>DOCUMENT NO.</strong></td>
+      <td>{{ site.doc_prefix }}/CV&mdash;{{ 'now' | date: "%Y" }}&mdash;REV.A</td>
+      <td><strong>REVISED</strong></td>
+      <td>{{ 'now' | date: "%B %Y" }}</td>
+    </tr>
+    <tr>
+      <td><strong>SUBJECT</strong></td>
+      <td colspan="3"><strong>Curriculum Vitae &mdash; Cecil O. Franklin</strong></td>
+    </tr>
+    <tr>
+      <td><strong>DISTRIBUTION</strong></td>
+      <td colspan="3">Unlimited</td>
+    </tr>
+  </table>
 
   <div class="memo-body">
     {{ content }}
   </div>
-
 </article>

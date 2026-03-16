@@ -2,59 +2,49 @@
 layout: default
 ---
 <article class="memo">
-
   <div class="memo-heading">CECIL O. FRANKLIN &mdash; TECHNICAL DOCUMENT SYSTEM</div>
   <div class="memo-rule-heavy"></div>
 
-  <div class="memo-fields">
-    <div class="memo-field">
-      <span class="memo-label">DOCUMENT NO.</span>
-      <span class="memo-value mono">{{ site.doc_prefix }}/{{ page.doc_type | default: "TM" }}&mdash;{{ page.date | date: "%Y" }}&mdash;{{ page.doc_seq | default: "001" }}</span>
-    </div>
-    <div class="memo-field">
-      <span class="memo-label">DATE</span>
-      <span class="memo-value">{{ page.date | date: "%B %d, %Y" }}</span>
-    </div>
-    <div class="memo-field">
-      <span class="memo-label">FROM</span>
-      <span class="memo-value">Cecil O. Franklin</span>
-    </div>
-    <div class="memo-field">
-      <span class="memo-label">TYPE</span>
-      <span class="memo-value">{% case page.doc_type %}{% when "TM" %}Technical Memorandum{% when "TN" %}Technical Note{% when "CR" %}Computational Report{% when "TP" %}Technical Paper{% else %}Technical Memorandum{% endcase %}</span>
-    </div>
+  <table class="doc-table">
+    <tr>
+      <td><strong>DOCUMENT NO.</strong></td>
+      <td>[{{ page.date | date: "%m" }}-{{ page.date | date: "%Y" }}-{{ page.doc_seq | default: "001" }}]</td>
+      <td><strong>DATE</strong></td>
+      <td>{{ page.date | date: "%B %d, %Y" }}</td>
+    </tr>
+    <tr>
+      <td><strong>FROM</strong></td>
+      <td>Cecil O. Franklin</td>
+      <td><strong>TYPE</strong></td>
+      <td>{% case page.doc_type %}{% when "TM" %}Technical Memorandum{% when "TN" %}Technical Note{% when "CR" %}Computational Report{% when "TP" %}Technical Paper{% else %}Technical Memorandum{% endcase %}</td>
+    </tr>
     {% if page.program %}
-    <div class="memo-field">
-      <span class="memo-label">PROGRAM</span>
-      <span class="memo-value">{{ page.program }}</span>
-    </div>
+    <tr>
+      <td><strong>PROGRAM</strong></td>
+      <td colspan="3">{{ page.program }}</td>
+    </tr>
     {% endif %}
-    <div class="memo-field">
-      <span class="memo-label">SUBJECT</span>
-      <span class="memo-value subject">{{ page.title }}</span>
-    </div>
+    <tr>
+      <td><strong>SUBJECT</strong></td>
+      <td colspan="3"><strong>{{ page.title }}</strong></td>
+    </tr>
     {% if page.tags and page.tags.size > 0 %}
-    <div class="memo-field">
-      <span class="memo-label">KEYWORDS</span>
-      <span class="memo-value">{{ page.tags | join: "; " }}</span>
-    </div>
+    <tr>
+      <td><strong>KEYWORDS</strong></td>
+      <td colspan="3">{{ page.tags | join: "; " }}</td>
+    </tr>
     {% endif %}
-  </div>
-
-  <div class="memo-rule-heavy"></div>
+  </table>
 
   {% if page.abstract %}
-  <div class="memo-abstract">
-    <span class="memo-abstract-label">ABSTRACT &mdash;</span> {{ page.abstract }}
-  </div>
-  <div class="memo-rule-light"></div>
+  <p class="memo-abstract"><span class="memo-abstract-label">ABSTRACT &mdash;</span> {{ page.abstract }}</p>
+  <div class="memo-rule"></div>
   {% endif %}
 
   <div class="memo-body">
     {{ content }}
   </div>
 
-  <div class="memo-rule-light"></div>
+  <div class="memo-rule"></div>
   <div class="memo-end">&mdash; END OF DOCUMENT &mdash;</div>
-
 </article>
