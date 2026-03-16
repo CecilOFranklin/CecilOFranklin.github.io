@@ -1,0 +1,9 @@
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+.firecrawl/
+*.swp
+*~
+.DS_Store
+Thumbs.db
